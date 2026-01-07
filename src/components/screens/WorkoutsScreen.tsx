@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Plus, Calendar, TrendingUp } from "lucide-react";
 import { Button } from "../ui/button";
 import { ExerciseCard } from "../ExerciseCard";
 import { WorkoutSheet } from "../WorkoutSheet";
+import { useWorkoutHistoryContext } from "@/contexts/WorkoutHistoryContext";
 
 const myWorkouts = [
   {
@@ -37,11 +38,37 @@ const myWorkouts = [
 ];
 
 const weekDays = ["S", "T", "Q", "Q", "S", "S", "D"];
-const completedDays = [true, true, false, true, true, false, false];
 
 export function WorkoutsScreen() {
   const [selectedWorkout, setSelectedWorkout] = useState<typeof myWorkouts[0] | null>(null);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const { history } = useWorkoutHistoryContext();
+
+  // Calculate completed days this week based on actual history
+  const completedDays = useMemo(() => {
+    const today = new Date();
+    const currentDay = today.getDay();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - currentDay);
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    // Create array for each day of the week (Sun-Sat)
+    const days = [false, false, false, false, false, false, false];
+    
+    history.forEach(workout => {
+      const workoutDate = new Date(workout.completedAt);
+      if (workoutDate >= startOfWeek) {
+        const dayIndex = workoutDate.getDay();
+        days[dayIndex] = true;
+      }
+    });
+
+    // Reorder to start from Monday (S, T, Q, Q, S, S, D)
+    return [days[1], days[2], days[3], days[4], days[5], days[6], days[0]];
+  }, [history]);
+
+  const completedCount = completedDays.filter(Boolean).length;
+  const weeklyGoal = 5;
 
   const handleWorkoutClick = (workout: typeof myWorkouts[0]) => {
     setSelectedWorkout(workout);
@@ -88,7 +115,7 @@ export function WorkoutsScreen() {
           <div className="flex items-center gap-2 text-sm">
             <TrendingUp className="w-4 h-4 text-success" />
             <span className="text-muted-foreground">
-              <span className="text-success font-semibold">4 de 5</span> treinos completos
+              <span className="text-success font-semibold">{completedCount} de {weeklyGoal}</span> treinos completos
             </span>
           </div>
         </div>
