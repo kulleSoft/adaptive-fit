@@ -51,8 +51,8 @@ export function TermsDialog({ open, onOpenChange, isReadOnly = false }: TermsDia
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-md mx-4 rounded-2xl" onPointerDownOutside={(e) => !isReadOnly && e.preventDefault()}>
-        <DialogHeader>
+      <DialogContent className="max-w-md mx-4 rounded-2xl max-h-[85vh] flex flex-col" onPointerDownOutside={(e) => !isReadOnly && e.preventDefault()}>
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle className="text-xl font-bold text-center">
             Termos de Uso
           </DialogTitle>
@@ -61,7 +61,7 @@ export function TermsDialog({ open, onOpenChange, isReadOnly = false }: TermsDia
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="max-h-[300px] pr-4">
+        <ScrollArea className="flex-1 min-h-0 max-h-[40vh] pr-4">
           <div className="space-y-4 text-sm text-foreground/80">
             <section>
               <h3 className="font-semibold text-foreground mb-2">1. Aceitação dos Termos</h3>
@@ -114,13 +114,13 @@ export function TermsDialog({ open, onOpenChange, isReadOnly = false }: TermsDia
           </div>
         </ScrollArea>
 
-        <DialogFooter className="flex-col gap-2 sm:flex-col">
+        <DialogFooter className="flex-col gap-2 sm:flex-col flex-shrink-0 pt-4">
           {isReadOnly ? (
             <Button onClick={() => onOpenChange?.(false)} className="w-full">
               Fechar
             </Button>
           ) : (
-            <Button onClick={handleAccept} className="w-full">
+            <Button variant="coral" onClick={handleAccept} className="w-full">
               Li e Aceito os Termos
             </Button>
           )}
