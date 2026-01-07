@@ -4,11 +4,10 @@ import { HomeScreen } from "@/components/screens/HomeScreen";
 import { WorkoutsScreen } from "@/components/screens/WorkoutsScreen";
 import { HistoryScreen } from "@/components/screens/HistoryScreen";
 import { ProfileScreen } from "@/components/screens/ProfileScreen";
-import { TermsDialog, useTermsDialog } from "@/components/TermsDialog";
+import { TermsDialog } from "@/components/TermsDialog";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
-  const { showTerms, setShowTerms } = useTermsDialog();
 
   const renderScreen = () => {
     switch (activeTab) {
@@ -19,7 +18,7 @@ const Index = () => {
       case "history":
         return <HistoryScreen />;
       case "profile":
-        return <ProfileScreen onOpenTerms={() => setShowTerms(true)} />;
+        return <ProfileScreen />;
       default:
         return <HomeScreen />;
     }
@@ -28,7 +27,6 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background max-w-lg mx-auto relative">
       <TermsDialog />
-      <TermsDialog open={showTerms} onOpenChange={setShowTerms} isReadOnly />
       {renderScreen()}
       <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
