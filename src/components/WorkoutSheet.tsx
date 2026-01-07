@@ -2,6 +2,8 @@ import { Drawer } from "vaul";
 import { Clock, Flame, Target, Play, X, CheckCircle2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useWorkoutHistoryContext } from "@/contexts/WorkoutHistoryContext";
+import { toast } from "sonner";
 
 interface Exercise {
   name: string;
@@ -25,7 +27,21 @@ interface WorkoutSheetProps {
 }
 
 export function WorkoutSheet({ open, onOpenChange, workout }: WorkoutSheetProps) {
+  const { addWorkout } = useWorkoutHistoryContext();
+
   if (!workout) return null;
+
+  const handleStartWorkout = () => {
+    addWorkout({
+      title: workout.title,
+      duration: workout.duration,
+      calories: workout.calories,
+    });
+    toast.success("Treino registrado!", {
+      description: `${workout.title} foi adicionado ao seu histórico.`,
+    });
+    onOpenChange(false);
+  };
 
   return (
     <Drawer.Root open={open} onOpenChange={onOpenChange}>
@@ -110,7 +126,7 @@ export function WorkoutSheet({ open, onOpenChange, workout }: WorkoutSheetProps)
 
           {/* Fixed Bottom Button */}
           <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-background via-background to-transparent pt-10 safe-bottom">
-            <Button variant="coral" size="lg" className="w-full">
+            <Button variant="coral" size="lg" className="w-full" onClick={handleStartWorkout}>
               <Play className="w-5 h-5" />
               Iniciar Treino
             </Button>
