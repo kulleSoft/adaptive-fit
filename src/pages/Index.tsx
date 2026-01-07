@@ -6,6 +6,7 @@ import { HistoryScreen } from "@/components/screens/HistoryScreen";
 import { ProfileScreen } from "@/components/screens/ProfileScreen";
 import { TermsDialog } from "@/components/TermsDialog";
 import { WorkoutHistoryProvider } from "@/contexts/WorkoutHistoryContext";
+import { CustomWorkoutsProvider } from "@/contexts/CustomWorkoutsContext";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
@@ -27,11 +28,13 @@ const Index = () => {
 
   return (
     <WorkoutHistoryProvider>
-      <div className="min-h-screen bg-background max-w-lg mx-auto relative">
-        <TermsDialog />
-        {renderScreen()}
-        <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
-      </div>
+      <CustomWorkoutsProvider>
+        <div className="min-h-screen bg-background max-w-lg mx-auto relative">
+          <TermsDialog />
+          {renderScreen()}
+          <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+        </div>
+      </CustomWorkoutsProvider>
     </WorkoutHistoryProvider>
   );
 };
