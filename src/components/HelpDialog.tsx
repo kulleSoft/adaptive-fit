@@ -32,7 +32,7 @@ const helpItems = [
   {
     icon: Mail,
     title: "Email",
-    description: "suporte@fitnessapp.com",
+    description: "suporte@fitflowgym.com",
   },
 ];
 
