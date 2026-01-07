@@ -1,13 +1,18 @@
-import { User, Settings, Bell, HelpCircle, LogOut, ChevronRight, Award, Target } from "lucide-react";
+import { User, Settings, Bell, HelpCircle, LogOut, ChevronRight, Award, Target, FileText } from "lucide-react";
 import { Button } from "../ui/button";
 
+interface ProfileScreenProps {
+  onOpenTerms?: () => void;
+}
+
 const menuItems = [
-  { icon: User, label: "Editar Perfil", href: "#" },
-  { icon: Target, label: "Minhas Metas", href: "#" },
-  { icon: Award, label: "Conquistas", href: "#", badge: "3 novas" },
-  { icon: Bell, label: "Notificações", href: "#" },
-  { icon: Settings, label: "Configurações", href: "#" },
-  { icon: HelpCircle, label: "Ajuda", href: "#" },
+  { icon: User, label: "Editar Perfil", key: "profile" },
+  { icon: Target, label: "Minhas Metas", key: "goals" },
+  { icon: Award, label: "Conquistas", key: "achievements", badge: "3 novas" },
+  { icon: Bell, label: "Notificações", key: "notifications" },
+  { icon: Settings, label: "Configurações", key: "settings" },
+  { icon: FileText, label: "Termos de Uso", key: "terms" },
+  { icon: HelpCircle, label: "Ajuda", key: "help" },
 ];
 
 const achievements = [
@@ -16,7 +21,13 @@ const achievements = [
   { emoji: "⚡", label: "5000 kcal" },
 ];
 
-export function ProfileScreen() {
+export function ProfileScreen({ onOpenTerms }: ProfileScreenProps) {
+  const handleMenuClick = (key: string) => {
+    if (key === "terms" && onOpenTerms) {
+      onOpenTerms();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background pb-28">
       {/* Header */}
@@ -73,7 +84,8 @@ export function ProfileScreen() {
             const Icon = item.icon;
             return (
               <button
-                key={index}
+                key={item.key}
+                onClick={() => handleMenuClick(item.key)}
                 className="w-full flex items-center gap-4 p-4 hover:bg-secondary transition-colors text-left border-b border-border last:border-b-0"
               >
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
