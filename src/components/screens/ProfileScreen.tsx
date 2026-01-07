@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { HelpDialog } from "../HelpDialog";
 import { SettingsDialog } from "../SettingsDialog";
 import { TermsDialog } from "../TermsDialog";
-
 const achievements = [{
   emoji: "🔥",
   label: "7 dias seguidos"
@@ -16,18 +15,15 @@ const achievements = [{
   emoji: "⚡",
   label: "5000 kcal"
 }];
-
 export function ProfileScreen() {
   const [showHelp, setShowHelp] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
-
   const showDevelopmentToast = (feature: string) => {
     toast.info(`${feature} está em desenvolvimento`, {
       description: "Esta funcionalidade estará disponível em breve!"
     });
   };
-
   const menuItems = [{
     icon: User,
     label: "Editar Perfil",
@@ -58,9 +54,7 @@ export function ProfileScreen() {
     label: "Termos de Uso",
     onClick: () => setShowTerms(true)
   }];
-
-  return (
-    <div className="min-h-screen bg-background pb-28">
+  return <div className="min-h-screen bg-background pb-28">
       {/* Header */}
       <header className="px-5 pt-12 pb-6 safe-top">
         <h1 className="text-2xl font-bold text-foreground">Perfil</h1>
@@ -73,7 +67,7 @@ export function ProfileScreen() {
             JM
           </div>
           <h2 className="text-xl font-bold text-foreground">João Marcos</h2>
-          <p className="text-muted-foreground text-sm mb-4">joao@email.com</p>
+          
           
           <div className="flex justify-center gap-8 pt-4 border-t border-border">
             <div className="text-center">
@@ -96,12 +90,10 @@ export function ProfileScreen() {
       <div className="px-5 mb-6">
         <h3 className="font-bold text-foreground mb-3">Conquistas Recentes</h3>
         <div className="flex gap-3">
-          {achievements.map((achievement, index) => (
-            <div key={index} className="flex-1 bg-card p-3 rounded-xl shadow-card text-center">
+          {achievements.map((achievement, index) => <div key={index} className="flex-1 bg-card p-3 rounded-xl shadow-card text-center">
               <span className="text-2xl">{achievement.emoji}</span>
               <p className="text-xs text-muted-foreground mt-1">{achievement.label}</p>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
@@ -109,36 +101,24 @@ export function ProfileScreen() {
       <div className="px-5 mb-6">
         <div className="bg-card rounded-2xl shadow-card overflow-hidden">
           {menuItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <button 
-                key={index} 
-                onClick={item.onClick}
-                className="w-full flex items-center gap-4 p-4 hover:bg-secondary transition-colors text-left border-b border-border last:border-b-0"
-              >
+          const Icon = item.icon;
+          return <button key={index} onClick={item.onClick} className="w-full flex items-center gap-4 p-4 hover:bg-secondary transition-colors text-left border-b border-border last:border-b-0">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
                   <Icon className="w-5 h-5 text-foreground" />
                 </div>
                 <span className="flex-1 font-medium text-foreground">{item.label}</span>
-                {item.badge && (
-                  <span className="px-2 py-1 bg-coral-light text-coral text-xs font-medium rounded-full">
+                {item.badge && <span className="px-2 py-1 bg-coral-light text-coral text-xs font-medium rounded-full">
                     {item.badge}
-                  </span>
-                )}
+                  </span>}
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </button>
-            );
-          })}
+              </button>;
+        })}
         </div>
       </div>
 
       {/* Logout */}
       <div className="px-5">
-        <Button 
-          variant="outline" 
-          className="w-full text-destructive hover:text-destructive hover:bg-destructive/5"
-          onClick={() => showDevelopmentToast("Sair da conta")}
-        >
+        <Button variant="outline" className="w-full text-destructive hover:text-destructive hover:bg-destructive/5" onClick={() => showDevelopmentToast("Sair da conta")}>
           <LogOut className="w-5 h-5" />
           Sair da conta
         </Button>
@@ -148,6 +128,5 @@ export function ProfileScreen() {
       <HelpDialog open={showHelp} onOpenChange={setShowHelp} />
       <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
       <TermsDialog open={showTerms} onOpenChange={setShowTerms} isReadOnly />
-    </div>
-  );
+    </div>;
 }
