@@ -32,6 +32,7 @@ export function WorkoutSheet({ open, onOpenChange, workout }: WorkoutSheetProps)
   if (!workout) return null;
 
   const handleStartWorkout = () => {
+    console.log("Botão Iniciar Treino clicado!", workout);
     addWorkout({
       title: workout.title,
       duration: workout.duration,
