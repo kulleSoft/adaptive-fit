@@ -218,7 +218,10 @@ export function HomeScreen() {
               icon={category.icon}
               label={category.label}
               isActive={activeCategory === category.id}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => {
+                console.log("Categoria clicada:", category.label, category.id);
+                setActiveCategory(category.id);
+              }}
             />
           ))}
         </div>
